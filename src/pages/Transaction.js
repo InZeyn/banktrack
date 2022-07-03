@@ -6,8 +6,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArticleIcon from '@mui/icons-material/Article';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
-export default function Transaction({ transaction }) {
+export default function Transaction({ transaction, deleteTransaction }) {
+
     return (
         <div>
             <Card sx={{ minWidth: 275, marginBottom: 2, backgroundColor: "#222222" }} >
@@ -20,10 +23,12 @@ export default function Transaction({ transaction }) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button color="success" size="small" startIcon={<ArticleIcon />}>Details</Button>
-                    <Button color="error" size="small" startIcon={<DeleteIcon />}>Delete</Button>
+                    <Link to={`/transaction/${transaction.id}`} state={{ transaction: transaction }} style={{ textDecoration: 'none' }}>
+                        <Button color="success" size="small" startIcon={<ArticleIcon />}>Details</Button>
+                    </Link>
+                    <Button color="error" size="small" startIcon={<DeleteIcon />} onClick={(e) => deleteTransaction(e, transaction)}>Delete</Button>
                 </CardActions>
             </Card>
-        </div>
+        </div >
     )
 }
