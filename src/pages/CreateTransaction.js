@@ -3,15 +3,17 @@ import { useState, useEffect } from 'react';
 import { Paper, Button, Input, TextField, InputLabel, Select, MenuItem } from '@mui/material';
 import { Container } from '@mui/system';
 import configData from '../config.json';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateTransaction() {
     const BaseURL = configData.API_URL;
     const AUTH_KEY = configData.AUTH_KEY;
     const [inputs, setInputs] = useState({ "candidateId": AUTH_KEY });
     const [accounts, setAccounts] = useState({})
+    let navigate = useNavigate();
     const style = {
         margin: 10,
-        width: '97%',
+        width: '98%',
         marginBottom: 0,
     };
     const styleLbl = {
@@ -78,8 +80,14 @@ export default function CreateTransaction() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(inputs);
         createTransaction(event)
+    }
+
+    const handleReset = (event) => {
+        event.preventDefault();
+        setInputs({})
+        let path = `/`;
+        navigate(path);
     }
 
     return (
@@ -140,10 +148,10 @@ export default function CreateTransaction() {
                     }
                 </Select>
                 <br />
-                <Button onClick={handleSubmit} style={style}>Submit</Button>
                 <br />
+                <Button onClick={handleSubmit} style={{ width: "50%" }}>Submit</Button>
+                <Button onClick={handleReset} color="secondary" style={{ width: "50%" }}>Cancel</Button>
                 <br />
-                {/* <Button onClick={handleReset}>Reset</Button> */}
             </Paper>
         </Container>
 

@@ -1,20 +1,25 @@
 import React from 'react'
-import { useParams, useLocation } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { Container, Button } from '@mui/material';
 import CardPartial from '../components/CardPartial';
 
+
 function TransactionDetails() {
-    const { id } = useParams();
     const { state } = useLocation();
     const transaction = state.transaction;
+    let navigate = useNavigate();
 
-
-    console.log(transaction);
+    const handleReset = (event) => {
+        event.preventDefault();
+        let path = `/`;
+        navigate(path);
+    }
 
     return (
         <Container>
             <CardPartial {...transaction} />
-        </Container>
+            <Button onClick={e => handleReset(e)} color="secondary" style={{ width: "100%" }}>Return</Button>
+        </Container >
 
     )
 }

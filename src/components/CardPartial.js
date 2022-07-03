@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, CardContent, Typography } from '@mui/material'
 import Moment from 'moment';
-export default function CardPartial({ concept, description, ammount, accountId, date }) {
 
+export default function CardPartial({ concept, description, ammount, accountId, date }) {
     return (
         <>
             <Typography variant="h2" component="div" align='center'>
