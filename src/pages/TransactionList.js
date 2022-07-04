@@ -66,8 +66,12 @@ export default function TransactionList() {
         fetchData()
     }, [])
 
-    const searchTransactions = (searchValue) => {
-        setSearchInput(searchValue)
+    useEffect(() => {
+        searchTransactions()
+    }, [searchInput])
+
+    const searchTransactions = () => {
+        console.log("INPUT: " + searchInput + "\nVALUE: ")
         if (searchInput !== '') {
             const filteredTransactions = transactions.filter((transaction) => {
                 return Object.values(transaction).join('').toLowerCase().includes(searchInput.toLowerCase())
@@ -83,7 +87,7 @@ export default function TransactionList() {
         <>
             <Input
                 placeholder="Search…"
-                onChange={(e) => searchTransactions(e.target.value)}
+                onChange={(e) => setSearchInput(e.target.value.replace(/[^\w\s]/gi, ""))}
                 value={searchInput}
                 style={{ textDecoration: 'none' }}
                 fullWidth
