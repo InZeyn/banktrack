@@ -74,7 +74,7 @@ export default function TransactionList() {
         console.log("INPUT: " + searchInput + "\nVALUE: ")
         if (searchInput !== '') {
             const filteredTransactions = transactions.filter((transaction) => {
-                return Object.values(transaction).join('').toLowerCase().includes(searchInput.toLowerCase())
+                return Object.values(transaction.concept).join('').toLowerCase().includes(searchInput.toLowerCase())
             })
             setFilteredResults(filteredTransactions)
         }
