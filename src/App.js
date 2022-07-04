@@ -6,8 +6,9 @@ function App() {
   return (
     <Container>
       <div class="primary">
+        <br></br>
         <Typography variant="h1" component="div" color="text.main" align="center" >
-          Banktrack
+          BankTrack
         </Typography>
         <br></br>
         <TransactionList />
