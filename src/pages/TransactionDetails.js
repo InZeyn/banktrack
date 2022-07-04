@@ -27,7 +27,6 @@ function TransactionDetails() {
                     </Link>
                     : null
             }
-
             <Button onClick={e => handleReset(e)} color="secondary" style={{}}>Return</Button>
         </Container >
     )

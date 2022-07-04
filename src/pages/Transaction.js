@@ -17,7 +17,7 @@ export default function Transaction({ transaction, deleteTransaction }) {
             <Card sx={{ minWidth: 275, marginBottom: 2, backgroundColor: "#222222" }} >
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="#ebebeb" gutterBottom>
-                        Transferencia
+                        Transaction
                     </Typography>
                     <Typography variant="h4" component="div" color="#ffffff">
                         {transaction.concept}
