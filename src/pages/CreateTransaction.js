@@ -11,7 +11,7 @@ export default function CreateTransaction() {
     const AUTH_KEY = configData.AUTH_KEY;
     const { state } = useLocation();
     const transaction = state.transaction;
-    const [inputs, setInputs] = useState({ "candidateId": AUTH_KEY });
+    const [inputs, setInputs] = useState({ "candidateId": AUTH_KEY, "description": '' });
     const [accounts, setAccounts] = useState({})
     const [title, setTitle] = useState('Create Transaction')
     let navigate = useNavigate();
