@@ -20,7 +20,9 @@ export default function FloatingButton() {
     let navigate = useNavigate();
     const routeChange = () => {
         let path = `/transaction/create`;
-        navigate(path);
+        navigate(path, {
+            state: { transaction: {} }
+        });
     }
 
     return (

@@ -3,13 +3,17 @@ import { useState, useEffect } from 'react';
 import { Paper, Button, Input, TextField, InputLabel, Select, MenuItem } from '@mui/material';
 import { Container } from '@mui/system';
 import configData from '../config.json';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Moment from 'moment';
 
 export default function CreateTransaction() {
     const BaseURL = configData.API_URL;
     const AUTH_KEY = configData.AUTH_KEY;
+    const { state } = useLocation();
+    const transaction = state.transaction;
     const [inputs, setInputs] = useState({ "candidateId": AUTH_KEY });
     const [accounts, setAccounts] = useState({})
+    const [title, setTitle] = useState('Create Transaction')
     let navigate = useNavigate();
     const style = {
         margin: 10,
@@ -32,7 +36,7 @@ export default function CreateTransaction() {
             })
             const data = await response.json()
             if (data.success) {
-                console.log('success')
+                console.log('success getting accounts')
                 setAccounts(data.data)
             }
             else {
@@ -47,20 +51,43 @@ export default function CreateTransaction() {
     async function createTransaction(event) {
         event.preventDefault()
         try {
-            const response = await fetch(BaseURL + "/transactions", {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': AUTH_KEY
-                },
-                body: JSON.stringify(inputs)
-            })
-            const data = await response.json()
-            if (data.success) {
-                console.log('success')
-            }
-            else {
-                console.log('error')
+            if (inputs.id !== null && inputs.id !== undefined) {
+                const response = await fetch(BaseURL + "/transactions", {
+                    method: 'put',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': AUTH_KEY
+                    },
+                    body: JSON.stringify(inputs)
+                })
+                const data = await response.json()
+                if (data.success) {
+                    console.log('success updating transaction')
+                    let path = `/`;
+                    navigate(path);
+                }
+                else {
+                    console.log('error')
+                }
+
+            } else {
+                const response = await fetch(BaseURL + "/transactions", {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': AUTH_KEY
+                    },
+                    body: JSON.stringify(inputs)
+                })
+                const data = await response.json()
+                if (data.success) {
+                    console.log('success creating transaction')
+                    let path = `/`;
+                    navigate(path);
+                }
+                else {
+                    console.log('error')
+                }
             }
 
         } catch (error) {
@@ -68,8 +95,19 @@ export default function CreateTransaction() {
         }
     }
 
+    const checkUpdate = (transaction) => {
+
+        if (transaction.id !== null && transaction.id !== undefined) {
+            setTitle('Update Transaction');
+            transaction.date = Moment(transaction.date).format('YYYY-MM-DD');
+            setInputs(transaction)
+            console.log(transaction)
+        }
+    }
+
     useEffect(() => {
         getAccounts()
+        checkUpdate(transaction)
     }, [])
 
     const handleChange = (event) => {
@@ -92,7 +130,7 @@ export default function CreateTransaction() {
 
     return (
         <Container>
-            <h1>CreateTransaction</h1>
+            <h1>{title}</h1>
             <Paper>
                 <br></br>
                 <InputLabel style={styleLbl}>Concept</InputLabel>
@@ -133,20 +171,38 @@ export default function CreateTransaction() {
                 />
                 <br />
                 <InputLabel style={styleLbl}>Account</InputLabel>
-                <Select
-                    type="text"
+                {
+                    transaction.id !== null && transaction.id !== undefined
+                        ? <Select
+                            type="text"
+                            disabled={true}
+                            value={inputs.accountId || ""}
+                            style={style}
+                            name='accountId'
+                            onChange={handleChange}
+                        >
+                            {
+                                accounts.length > 0 ? accounts.map((account) => {
+                                    return <MenuItem key={account.id} value={account.id}>{account.type}: {account.id}</MenuItem>
+                                }) : <MenuItem>No accounts</MenuItem>
+                            }
+                        </Select>
+                        : <Select
+                            type="text"
 
-                    value={inputs.accountId || ""}
-                    style={style}
-                    name='accountId'
-                    onChange={handleChange}
-                >
-                    {
-                        accounts.length > 0 ? accounts.map((account) => {
-                            return <MenuItem key={account.id} value={account.id}>{account.type}: {account.id}</MenuItem>
-                        }) : <MenuItem>No accounts</MenuItem>
-                    }
-                </Select>
+                            value={inputs.accountId || ""}
+                            style={style}
+                            name='accountId'
+                            onChange={handleChange}
+                        >
+                            {
+                                accounts.length > 0 ? accounts.map((account) => {
+                                    return <MenuItem key={account.id} value={account.id}>{account.type}: {account.id}</MenuItem>
+                                }) : <MenuItem>No accounts</MenuItem>
+                            }
+                        </Select>
+                }
+
                 <br />
                 <br />
                 <Button onClick={handleSubmit} style={{ width: "50%" }}>Submit</Button>

@@ -6,7 +6,7 @@ export default function CardPartial({ concept, description, ammount, accountId, 
     return (
         <>
             <Typography variant="h2" component="div" align='center'>
-                <b>Transaccion</b>
+                <b>Transaction</b>
             </Typography>
             <Card sx={{ minWidth: 275, marginBottom: 2, backgroundColor: "#222222" }} >
                 <CardContent>
@@ -33,7 +33,7 @@ export default function CardPartial({ concept, description, ammount, accountId, 
                         </>
 
                     }
-                    <Typography variant="h6" component="div" align='end'>
+                    <Typography variant="h6" component="div" align='right'>
                         {Moment(date).format('YYYY/MM/DD')}
                     </Typography>
                 </CardContent>

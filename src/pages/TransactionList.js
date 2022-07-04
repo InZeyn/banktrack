@@ -26,8 +26,6 @@ export default function TransactionList() {
         }
     }
 
-
-
     async function deleteTransaction(e, transaction) {
         e.preventDefault()
         if (AUTH_KEY === transaction.candidateId) {

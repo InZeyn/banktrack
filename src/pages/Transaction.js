@@ -30,7 +30,7 @@ export default function Transaction({ transaction, deleteTransaction }) {
                     {
                         transaction.candidateId === AUTH_KEY
                             ? <Button color="error" size="small" startIcon={<DeleteIcon />} onClick={(e) => deleteTransaction(e, transaction)}>Delete</Button>
-                            : <Button disabled="true" color="error" size="small" startIcon={<DeleteIcon />} onClick={(e) => deleteTransaction(e, transaction)}>Delete</Button>
+                            : <Button disabled={true} color="error" size="small" startIcon={<DeleteIcon />} onClick={(e) => deleteTransaction(e, transaction)}>Delete</Button>
                     }
                 </CardActions>
             </Card>

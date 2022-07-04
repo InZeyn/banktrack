@@ -19,6 +19,7 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="transaction/:id" element={<TransactionDetails />} />
           <Route path="transaction/create" element={<CreateTransaction />} />
+          <Route path="transaction/update/:id" element={<CreateTransaction />} />
         </Routes>
       </React.StrictMode>
     </ThemeProvider>
