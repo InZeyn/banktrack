@@ -6,10 +6,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArticleIcon from '@mui/icons-material/Article';
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import configData from '../config.json';
 
 export default function Transaction({ transaction, deleteTransaction }) {
+    const AUTH_KEY = configData.AUTH_KEY;
 
     return (
         <div>
@@ -26,7 +27,11 @@ export default function Transaction({ transaction, deleteTransaction }) {
                     <Link to={`/transaction/${transaction.id}`} state={{ transaction: transaction }} style={{ textDecoration: 'none' }}>
                         <Button color="success" size="small" startIcon={<ArticleIcon />}>Details</Button>
                     </Link>
-                    <Button color="error" size="small" startIcon={<DeleteIcon />} onClick={(e) => deleteTransaction(e, transaction)}>Delete</Button>
+                    {
+                        transaction.candidateId === AUTH_KEY
+                            ? <Button color="error" size="small" startIcon={<DeleteIcon />} onClick={(e) => deleteTransaction(e, transaction)}>Delete</Button>
+                            : <Button disabled="true" color="error" size="small" startIcon={<DeleteIcon />} onClick={(e) => deleteTransaction(e, transaction)}>Delete</Button>
+                    }
                 </CardActions>
             </Card>
         </div >
